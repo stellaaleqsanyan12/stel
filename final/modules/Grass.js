@@ -3,10 +3,8 @@ var random = require("./random");
 
 module.exports = class Grass extends LiveForm {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.multiply = 0;
-        this.directions = [];
     }
     getNewCoordinates() {
         this.directions = [
@@ -30,19 +28,13 @@ module.exports = class Grass extends LiveForm {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
 
-        if (newCell && this.multiply >= 10) {
-
+        if (newCell && this.multiply ) {
+             grassHashiv++
             let x = newCell[0];
             let y = newCell[1];
-
-            // matrixi mej gru mem MEK -> 1
             matrix[y][x] = 1;
-
-            // sarqum em OBJ lscnum grassArr-i mej 
             let grass = new Grass(x, y);
             grassArr.push(grass);
-
-
             this.multiply = 0;
         }
     }

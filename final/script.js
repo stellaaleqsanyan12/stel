@@ -6,9 +6,9 @@ function setup() {
     let grassCountElement = document.getElementById('grassCount');
     let grassLiveCountElement = document.getElementById('grassLiveCount');
     let grassEaterCountElement = document.getElementById('grassEaterCount');
-    let huntCountElement = document.getElementById('huntCount');
-    let terminatorCountElement = document.getElementById('termCount');
-    let titanCountElement = document.getElementById('titanCount');
+    let gishatichCountElement = document.getElementById('gishatichCount');
+    let jurCountElement = document.getElementById('jurCount');
+    let mardCountElement = document.getElementById('mardCount');
 
     socket.on("data", drawCreatures);
 
@@ -17,10 +17,10 @@ function setup() {
         weatherElement.innerText = data.weather; "summer"
         grassCountElement.innerText = data.grassCounter;
         grassLiveCountElement.innerText = data.grassLiveCounter;
-        grassEaterCountElement.innerText = data.eatCounter;
-        huntCountElement.innerText = data.huntCounter;
-        terminatorCountElement.innerText = data.termCounter;
-        titanCountElement.innerText = data.titanCounter;
+        grassEaterCountElement.innerText = data.grassEatCounter;
+        gishatichCountElement.innerText = data.gishatichCounter;
+        jurCountElement.innerText = data.jurCounter;
+        mardCountElement.innerText = data.mardCounter;
         
         createCanvas(matrix[0].length * side, matrix.length * side)
        
@@ -32,8 +32,8 @@ let side = 10;
 let grassArr = []; 
 let grassEaterArr = []; 
 let gishatichArr = [];
-let mardArr = [];
 let jurArr=[];
+
 
 function setup() {
     matrixGenerator(40, 80, 30,15 , 10, 2);
@@ -55,16 +55,16 @@ function setup() {
                 gishatichArr.push(gishatich);
             }
             if (matrix[y][x] == 4) {
-                let mard = new Mard(x, y);
-                mardArr.push(mard);
-            }
-            if (matrix[y][x] == 5) {
                 let jur = new Jur(x, y);
                 jurArr.push(jur);
             }
+            if (matrix[y][x] == 5) {
+                let mard = new Mard(x, y);
+                mardArr.push(mard);
+            }
         }
     }
-    function matrixGenerator(matrixSize, grass, grassEater,gishatich,mard,jur) {
+    function matrixGenerator(matrixSize, grass, grassEater,gishatich,jur,mard ) {
         for (let i = 0; i < matrixSize; i++) {
             matrix[i] = [];
             for (let o = 0; o < matrixSize; o++) {
@@ -86,12 +86,12 @@ function setup() {
             let customY = Math.floor(random(0, matrixSize));
             matrix[customY][customX] = 3;
         }
-        for (let i = 0; i < mard; i++) {
+        for (let i = 0; i < jur; i++) {
             let customX = Math.floor(random(0, matrixSize));
             let customY = Math.floor(random(0, matrixSize));
             matrix[customY][customX] = 4;
         }
-        for (let i = 0; i < jur; i++) {
+        for (let i = 0; i < mard; i++) {
             let customX = Math.floor(random(0, matrixSize));
             let customY = Math.floor(random(0, matrixSize));
             matrix[customY][customX] = 5;
@@ -134,12 +134,14 @@ function draw() {
     for (var i in gishatichArr) {
         gishatichArr[i].eat();
     }
+    for (var i in jurArr ) {
+        jurArr[i].eat();
+    }
     for (var i in mardArr) {
-        mardArr[i].eat();
+        mardArr[i].mul();
     }
-    for (var i in jurArr) {
-        jurArr[i].mul();
-    }
+    
 
-
+}
+}
 }

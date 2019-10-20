@@ -1,33 +1,33 @@
 //! Requiring modules  --  START
 var Grass = require("./modules/Grass.js");
 var GrassEater = require("./modules/GrassEater.js");
-var Hunter = require("./modules/Hunter.js");
-var Terminator = require("./modules/Terminator.js");
-var Titan = require("./modules/Titan.js");
+var Jur = require("./modules/Jur.js");
+var Gishatich = require("./modules/Gishatich.js");
+var Mard = require("./modules/Mard.js");
 let random = require('./modules/random');
 //! Requiring modules  --  END
 
 //! Initializing global arrays  --  START
 grassArr = [];
-eatArr = [];
-huntArr = [];
-termArr = [];
-titanArr = [];
+grassEaterArr = [];
+gishatichArr = [];
+jurArr = [];
+mardArr = [];
 matrix = [];
 //! Initializing global arrays  --  END
 
 // statistics start
 grassHashiv = 0;
-eatHashiv = 0;
-huntHashiv = 0;
-termHashiv = 0;
-titanHashiv = 0;
+grassEaterHashiv = 0;
+gishatichHashiv = 0;
+jurHashiv = 0;
+mardHashiv = 0;
 // statistics end
 
 // time = 0
 //! Creating MATRIX -- START
 
-function matrixGenerator(matrixSize, grass, eat, hunt, term, titan) {
+function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -39,22 +39,22 @@ function matrixGenerator(matrixSize, grass, eat, hunt, term, titan) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 1;
     }
-    for (let i = 0; i < eat; i++) {
+    for (let i = 0; i < grassEater; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 2;
     }
-    for (let i = 0; i < hunt; i++) {
+    for (let i = 0; i < gishatich; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 3;
     }
-    for (let i = 0; i < term; i++) {
+    for (let i = 0; i < jur; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
-    for (let i = 0; i < titan; i++) {
+    for (let i = 0; i <mard; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
@@ -80,27 +80,27 @@ function creatingObjects() {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 2) {
                 var grassEater = new GrassEater(x, y);
-                eatArr.push(grassEater);
-                eatHashiv++;
+                grassEaterArr.push(grassEater);
+                grassEaterHashiv++;
             } else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
                 grassHashiv++
             }
             else if (matrix[y][x] == 3) {
-                var hunt = new Hunter(x, y);
-                huntArr.push(hunt);
-                huntHashiv++
+                var gishatich= new Gishatich(x, y);
+                gishatichArr.push(gishatich);
+                gishatichHashiv++
             }
             else if (matrix[y][x] == 4) {
-                var term = new Terminator(x, y);
-                termArr.push(term);
-                termHashiv++
+                var jur = new Jur(x, y);
+                jurArr.push(jur);
+                jurHashiv++
             }
             else if (matrix[y][x] == 5) {
-                var titan = new Titan(x, y);
-                titanArr.push(titan);
-                titanHashiv++
+                var mard = new Mard(x, y);
+               mardArr.push(mard);
+                mardHashiv++
             }
         }
     }
@@ -128,24 +128,24 @@ function game() {
             grassArr[i].mul();
         }
     }
-    if (eatArr[0] !== undefined) {
-        for (var i in eatArr) {
-            eatArr[i].eat();
+    if (grassEaterArr[0] !== undefined) {
+        for (var i in grassEaterArr) {
+            grassEaterArr[i].eat();
         }
     }
-    if (huntArr[0] !== undefined) {
-        for (var i in huntArr) {
-            huntArr[i].eat();
+    if (gishatichArr[0] !== undefined) {
+        for (var i in gishatichArr) {
+            gishatichArr[i].eat();
         }
     }
-    if (termArr[0] !== undefined) {
-        for (var i in termArr) {
-            termArr[i].eat();
+    if (jurArr[0] !== undefined) {
+        for (var i in jurArr) {
+            jurArr[i].eat();
         }
     }
-    if (titanArr[0] !== undefined) {
-        for (var i in titanArr) {
-            titanArr[i].eat();
+    if (mardArr[0] !== undefined) {
+        for (var i in mardArr) {
+            mardArr[i].eat();
         }
     }
 
@@ -154,10 +154,10 @@ function game() {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassLiveCounter: grassArr.length,
-        eatCounter: eatHashiv,
-        huntCounter: huntHashiv,
-        termCounter: termHashiv,
-        titanCounter: titanHashiv,
+        grassEaterCounter: grassEaterHashiv,
+        gishatichCounter: gishatichHashiv,
+        jurCounter: jurHashiv,
+        mardCounter: mardHashiv,
         weather: weather
     }
 

@@ -1,18 +1,17 @@
 <html>
 
 <head>
-    <link
-        href="https://fonts.googleapis.com/css?family=Noto+Sans&amp;subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,latin-ext,vietnamese"
-        rel="stylesheet">
+    <meta charset="utf8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-    <script src="class.js"></script>
-    <script src="script.js"></script>
     <style>
         canvas {
             display: block;
             margin: 0 auto;
+        }
+
+        div {
+            display: inline-block;
         }
 
         h1 {
@@ -30,47 +29,62 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <h1>Ծրագրավորում II Ստեփանակերտ</h1>
+                <h1>Ծրագրավորում III Ստեփանակերտ</h1>
             </tr>
             <tr>
-                <h1>Ստելլա Ալեքսանյան</h1>
+                <h1>Անի Բալայան</h1>
+            </tr>
+            <tr>
+                <td>Եղանակ</td>
+                <td id="weather"></td>
             </tr>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Գույն</th>
                 <th scope="col">Նկարագրություն</th>
+                <th scope="col">Ծնվել է</th>
+                <th scope="col">Այս պահին կա</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <th scope="row">1</th>
                 <td scope="row" style="background-color:green;"></td>
-                <td>Խոտը բազմանում է մոտակա 8 վանդակներում,չի մահանում </td>
+                <td>Խոտը բազմանում է մոտակա 8 վանդակներում,</td>
+                <td id="grassCount"></td>
+                <td id="grassLiveCount"></td>
             </tr>
             <tr>
                 <th scope="row">2</th>
-                <td scope="row" style="background-color:orange;"></td>
-                <td>Խոտակերը քայլում է 0-ներով,ուտում է խոտին ու բազմանում է,երբ էներգիան հասնում է 26ի և մահանում է,երբ հասնում է 0ի</td>
+                <td scope="row" style="background-color:yellow;"></td>
+                <td>Խոտակերը ուտում է խոտին, բազմանում երբ էներգիան հասնում է 3-ի, մեռնում երբ էներգիան հավասարվում է
+                    0-ի,</td>
+                <td id="grassEaterCount"></td>
             </tr>
             <tr>
                 <th scope="row">3</th>
                 <td scope="row" style="background-color:red;"></td>
-                <td>Գիշատիչը ուտում է խոտակերին,քայլում է խոտի վրայով,բազմանում է,երբ էներգիան հասնում է 130ի և մահանում է,երբ հասնում է 0ի</td>
+                <td>Գիշատիչը ուտում է խոտակերին ու չի բազմանում,</td>
+                <td id="predatorCount"></td>
             </tr>
             <tr>
                 <th scope="row">4</th>
                 <td scope="row" style="background-color:black;"></td>
-                <td>Մարդը սպանում է գիշատիչին,քայլում է խոտի վրայով,բազմանում է,երբ էներգիան հասնում է 150ի, և մահանում է,երբ հասնում է 0ի</td>
+                <td>Մարդը սպանում է գիշատիչին, մեռնում երբ էներգիան հասնում է 0-ի և չի բազմանում,</td>
+                <td id="manCount"></td>
             </tr>
             <tr>
                 <th scope="row">5</th>
                 <td scope="row" style="background-color:blue;"></td>
-                <td>Ջուրս միայն բազմանում է,հոսում է խոտերի վրայով, մարդը խմում է Ջուր </td>
+                <td>Անձրևը հայտնվում է matrix-ում 1 վարկյան հետո անհետանում նորից հայտնվում և այդպես անվերջ:
+                    </td>
+                <td id="rainCount"></td>
             </tr>
-        </tr>
-
         </tbody>
     </table>
+    <script src="p5.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
