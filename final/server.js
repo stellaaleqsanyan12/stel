@@ -1,33 +1,29 @@
-//! Requiring modules  --  START
+
 var Grass = require("./modules/Grass.js");
 var GrassEater = require("./modules/GrassEater.js");
 var Jur = require("./modules/Jur.js");
 var Gishatich = require("./modules/Gishatich.js");
 var Mard = require("./modules/Mard.js");
+var Krak = require("./modules/Krak.js");
 let random = require('./modules/random');
-//! Requiring modules  --  END
 
-//! Initializing global arrays  --  START
 grassArr = [];
 grassEaterArr = [];
 gishatichArr = [];
 jurArr = [];
 mardArr = [];
+krakArr = [];
 matrix = [];
-//! Initializing global arrays  --  END
 
-// statistics start
 grassHashiv = 0;
 grassEaterHashiv = 0;
 gishatichHashiv = 0;
 jurHashiv = 0;
 mardHashiv = 0;
-// statistics end
+krakHashiv = 0;
 
-// time = 0
-//! Creating MATRIX -- START
 
-function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard) {
+function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard,krak) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -59,11 +55,14 @@ function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
+    for (let i = 0; i <krak; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 6;
+    }
 }
-matrixGenerator(20, 25, 20, 15, 10, 2);
-//! Creating MATRIX -- END
+matrixGenerator(20, 25, 20, 15, 10, 2,10);
 
-//! SERVER STUFF  --  START
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
@@ -73,7 +72,6 @@ app.get('/', function (req, res) {
     res.redirect('index.html');
 });
 server.listen(3000);
-//! SERVER STUFF END  --  END
 
 function creatingObjects() {
     for (var y = 0; y < matrix.length; y++) {
@@ -101,6 +99,11 @@ function creatingObjects() {
                 var mard = new Mard(x, y);
                mardArr.push(mard);
                 mardHashiv++
+            }
+            else if (matrix[y][x] == 6) {
+                var krak = new Krak(x, y);
+               krakArr.push(krak);
+               krakHashiv++
             }
         }
     }
@@ -140,16 +143,18 @@ function game() {
     }
     if (jurArr[0] !== undefined) {
         for (var i in jurArr) {
-            jurArr[i].eat();
+            jurArr[i].mul();
         }
     }
     if (mardArr[0] !== undefined) {
         for (var i in mardArr) {
             mardArr[i].eat();
         }
+        if (krakArr[0] !== undefined) {
+            for (var i in krakArr) {
+                krakArr[i].eat();
+            }
     }
-
-    //! Object to send
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
@@ -158,10 +163,9 @@ function game() {
         gishatichCounter: gishatichHashiv,
         jurCounter: jurHashiv,
         mardCounter: mardHashiv,
+        krakCounter: krakHashiv,
         weather: weather
     }
-
-    //! Send data over the socket to clients who listens "data"
     io.sockets.emit("data", sendData);
 }
 
@@ -170,4 +174,4 @@ function game() {
 setInterval(game, 1000)
 
 
-
+}
