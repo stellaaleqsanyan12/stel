@@ -1,3 +1,5 @@
+
+
 function setup() {
     var socket = io();
     var side = 30;
@@ -6,122 +8,122 @@ function setup() {
     let grassCountElement = document.getElementById('grassCount');
     let grassLiveCountElement = document.getElementById('grassLiveCount');
     let grassEaterCountElement = document.getElementById('grassEaterCount');
+    let grassLiveEaterCountElement = document.getElementById('grassEaterLiveCount');
     let gishatichCountElement = document.getElementById('gishatichCount');
+    let gishatichLiveCountElement = document.getElementById('gishatichLiveCount');
     let jurCountElement = document.getElementById('jurCount');
+    let jurLiveCountElement = document.getElementById('jurLiveCount');
     let mardCountElement = document.getElementById('mardCount');
+    let mardLiveCountElement = document.getElementById('mardLiveCount');
     let krakCountElement = document.getElementById('krakCount');
+    let krakLiveCountElement = document.getElementById('krakLiveCount');
 
     socket.on("data", drawCreatures);
 
     function drawCreatures(data) {
         matrix = data.matrix;
-        weatherElement.innerText = data.weather; 
+        weatherElement.innerText = data.weather;
         grassCountElement.innerText = data.grassCounter;
         grassLiveCountElement.innerText = data.grassLiveCounter;
         grassEaterCountElement.innerText = data.grassEaterCounter;
-        gishatichCountElement.innerText = data.gishatichCounter;
+        grassLiveEaterCountElement.innerText = data.grassEaterLiveCounter;
         jurCountElement.innerText = data.jurCounter;
+        jurLiveCountElement.innerText = data.jurLiveCounter;
+        gishatichCountElement.innerText = data.gishatichCounter;
+        gishatichLiveCountElement.innerText = data.gishatichLiveCounter;
         mardCountElement.innerText = data.mardCounter;
+        mardLiveCountElement.innerText = data.mardLiveCounter;
         krakCountElement.innerText = data.krakCounter;
-        
+        krakLiveCountElement.innerText = data.krakLiveCounter;
+
         createCanvas(matrix[0].length * side, matrix.length * side)
-       
+
         background('#acacac');
 
-// let matrix = [];
-// let side = 10;
-// let grassArr = []; 
-// let grassEaterArr = []; 
-// let gishatichArr = [];
-// let jurArr=[];
-// let mardArr = [];
-// let krakArr = [];
+        background('#acacac');
 
 
-
-    background('#acacac');
-        
-    for (var i = 0; i < matrix.length; i++) {
-        for (var j = 0; j < matrix[i].length; j++) {
-            if (matrix[i][j] == 1) {
-                if (data.weather == "Summer") {
-                    fill("green");
-                } else if (data.weather == "Autumn") {
-                    fill("#53cc1b");
+        for (var i = 0; i < matrix.length; i++) {
+            for (var j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == 1) {
+                    if (data.weather == "Summer") {
+                        fill("green");
+                    } else if (data.weather == "Autumn") {
+                        fill("#53cc1b");
+                    }
+                    else if (data.weather == "Winter") {
+                        fill("#b7f59a");
+                    }
+                    else if (data.weather == "Spring") {
+                        fill("#6eeb34");
+                    }
+                } else if (matrix[i][j] == 2) {
+                    if (data.weather == "Summer") {
+                        fill("#abad15");
+                    } else if (data.weather == "Autumn") {
+                        fill("#9fa12f");
+                    }
+                    else if (data.weather == "Winter") {
+                        fill("#f3f598");
+                    }
+                    else if (data.weather == "Spring") {
+                        fill("#fcff26");
+                    }
+                } else if (matrix[i][j] == 0) {
+                    fill('#acacac');
+                } else if (matrix[i][j] == 3) {
+                    if (data.weather == "Summer") {
+                        fill("#fa0000");
+                    } else if (data.weather == "Autumn") {
+                        fill("#700707");
+                    }
+                    else if (data.weather == "Winter") {
+                        fill(rgb(255, 0, 0));
+                    }
+                    else if (data.weather == "Spring") {
+                        fill("#00ff44");
+                    }
+                } else if (matrix[i][j] == 4) {
+                    if (data.weather == "Summer") {
+                        fill("#0051ff");
+                    } else if (data.weather == "Autumn") {
+                        fill("#427bf5");
+                    }
+                    else if (data.weather == "Winter") {
+                        fill("#68e2f2");
+                    }
+                    else if (data.weather == "Spring") {
+                        fill("#68b9f2");
+                    }
+                } else if (matrix[i][j] == 5) {
+                    if (data.weather == "Summer") {
+                        fill("#a600ff");
+                    } else if (data.weather == "Autumn") {
+                        fill("#dd00ff");
+                    }
+                    else if (data.weather == "Winter") {
+                        fill("#ff00b7");
+                    }
+                    else if (data.weather == "Spring") {
+                        fill("#00ff44");
+                    }
+                } else if (matrix[i][j] == 6) {
+                    if (data.weather == "Summer") {
+                        fill("#000000");
+                    } else if (data.weather == "Autumn") {
+                        fill("#403c3c");
+                    }
+                    else if (data.weather == "Winter") {
+                        fill("#212121");
+                    }
+                    else if (data.weather == "Spring") {
+                        fill("#545454");
+                    }
                 }
-                else if (data.weather == "Winter") {
-                    fill("#b7f59a");
-                }
-                else if (data.weather == "Spring") {
-                    fill("#6eeb34");
-                }
-            } else if (matrix[i][j] == 2) {
-                if (data.weather == "Summer") {
-                    fill("#abad15");
-                } else if (data.weather == "Autumn") {
-                    fill("#9fa12f");
-                }
-                else if (data.weather == "Winter") {
-                    fill("#f3f598");
-                }
-                else if (data.weather == "Spring") {
-                    fill("#fcff26");
-                }
-            } else if (matrix[i][j] == 0) {
-                fill('#acacac');
-            } else if (matrix[i][j] == 3) {
-                if (data.weather == "Summer") {
-                    fill("#fa0000");
-                } else if (data.weather == "Autumn") {
-                    fill("#700707");
-                }
-                else if (data.weather == "Winter") {
-                    fill("#f59898");
-                }
-                else if (data.weather == "Spring") {
-                    fill("#00ff44");
-                }
-            } else if (matrix[i][j] == 4) {
-                if (data.weather == "Summer") {
-                    fill("#0051ff");
-                } else if (data.weather == "Autumn") {
-                    fill("#427bf5");
-                }
-                else if (data.weather == "Winter") {
-                    fill("#68e2f2");
-                }
-                else if (data.weather == "Spring") {
-                    fill("#68b9f2");
-                }
-            } else if (matrix[i][j] == 5) {
-                if (data.weather == "Summer") {
-                    fill("#a600ff");
-                } else if (data.weather == "Autumn") {
-                    fill("#dd00ff");
-                }
-                else if (data.weather == "Winter") {
-                    fill("#ff00b7");
-                }
-                else if (data.weather == "Spring") {
-                    fill("#00ff44");
-                }
-            }else if (matrix[i][j] == 6) {
-                if (data.weather == "Summer") {
-                    fill("#000000");
-                } else if (data.weather == "Autumn") {
-                    fill("#403c3c");
-                }
-                else if (data.weather == "Winter") {
-                    fill("#212121");
-                }
-                else if (data.weather == "Spring") {
-                    fill("#545454");
-                }
+                rect(j * side, i * side, side, side);
             }
-            rect(j * side, i * side, side, side);
         }
     }
-}
 
 }
 //     function matrixGenerator(matrixSize, grass, grassEater,gishatich,jur,mard, krak) {
@@ -190,7 +192,7 @@ function setup() {
 //             }
 //             rect(x * side, y * side, side, side);
 //         }
-        
+
 //     }
 
 //     for (var i in grassArr) {

@@ -22,8 +22,8 @@ jurHashiv = 0;
 mardHashiv = 0;
 krakHashiv = 0;
 
+function matrixGenerator(matrixSize, grass, grassEater, gishatich, jur, mard, krak) {
 
-function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard,krak) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -34,6 +34,7 @@ function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard,krak
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 1;
+
     }
     for (let i = 0; i < grassEater; i++) {
         let customX = Math.floor(random(matrixSize));
@@ -50,18 +51,18 @@ function matrixGenerator(matrixSize, grass, grassEater, gishatich,jur, mard,krak
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
-    for (let i = 0; i <mard; i++) {
+    for (let i = 0; i < mard; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
-    for (let i = 0; i <krak; i++) {
+    for (let i = 0; i < krak; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 6;
     }
 }
-matrixGenerator(20, 25, 20, 15, 10, 2,10);
+matrixGenerator(20, 25, 20, 15, 10, 2, 10);
 
 var express = require('express');
 var app = express();
@@ -71,7 +72,7 @@ app.use(express.static("."));
 app.get('/', function (req, res) {
     res.redirect('index.html');
 });
-server.listen(3000);
+server.listen(3001);
 
 function creatingObjects() {
     for (var y = 0; y < matrix.length; y++) {
@@ -83,27 +84,27 @@ function creatingObjects() {
             } else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
-                grassHashiv++
+                grassHashiv++;
             }
             else if (matrix[y][x] == 3) {
-                var gishatich= new Gishatich(x, y);
+                var gishatich = new Gishatich(x, y);
                 gishatichArr.push(gishatich);
-                gishatichHashiv++
+                gishatichHashiv++;
             }
             else if (matrix[y][x] == 4) {
                 var jur = new Jur(x, y);
                 jurArr.push(jur);
-                jurHashiv++
+                jurHashiv++;
             }
             else if (matrix[y][x] == 5) {
                 var mard = new Mard(x, y);
-               mardArr.push(mard);
-                mardHashiv++
+                mardArr.push(mard);
+                mardHashiv++;
             }
             else if (matrix[y][x] == 6) {
                 var krak = new Krak(x, y);
-               krakArr.push(krak);
-               krakHashiv++
+                krakArr.push(krak);
+                krakHashiv++;
             }
         }
     }
@@ -117,12 +118,12 @@ let weather = "winter"
 function game() {
 
     exanak++;
-    if (exanak <= 10){
+    if (exanak <= 10) {
         weather = "summer"
-    }else if (exanak <= 20){
+    } else if (exanak <= 20) {
         weather = "autumn"
-    }else if (exanak > 20){
-        exanak = 0
+    } else if (exanak > 20) {
+        exanak = 0;
     }
 
 
@@ -154,24 +155,25 @@ function game() {
             for (var i in krakArr) {
                 krakArr[i].eat();
             }
+        }
+        let sendData = {
+            matrix: matrix,
+            grassCounter: grassHashiv,
+            grassLiveCounter: grassArr.length,
+            grassEaterCounter: grassEaterHashiv,
+           grassEaterLiveCounter: grassEaterArr.length,
+            gishatichCounter: gishatichHashiv,
+            gishatichLiveCounter: gishatichArr.length,
+            jurCounter: jurHashiv,
+             jurLiveCounter: jurArr.length,
+            mardCounter: mardHashiv,
+            mardLiveCounter: mardArr.length,
+            krakCounter: krakHashiv,
+            krakLiveCounter: krakArr.length,
+            weather: weather,
+        }
+        io.sockets.emit("data", sendData);
     }
-    let sendData = {
-        matrix: matrix,
-        grassCounter: grassHashiv,
-        grassLiveCounter: grassArr.length,
-        grassEaterCounter: grassEaterHashiv,
-        gishatichCounter: gishatichHashiv,
-        jurCounter: jurHashiv,
-        mardCounter: mardHashiv,
-        krakCounter: krakHashiv,
-        weather: weather
-    }
-    io.sockets.emit("data", sendData);
-}
-
-
-
-setInterval(game, 1000)
-
 
 }
+setInterval(game, 300)

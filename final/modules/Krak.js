@@ -5,6 +5,7 @@ module.exports = class Krak extends LiveForm {
     constructor(x, y) {
         super(x,y);
         this.multiply = 0;
+        this.life = 10;
     }
     getNewCoordinates() {
         this.directions = [
@@ -62,9 +63,6 @@ eat() {
         if (this.life >= 26) {
             this.mul();
         }
-    }
-    else {
-        this.move()
     }
 }
 }
